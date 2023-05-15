@@ -1,36 +1,25 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
+import 'package:test_app/modules/color_randomizer.dart';
 
 class MainScreen extends StatefulWidget {
-
-
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  Color backgroundColor = const Color.fromRGBO(255, 255, 255, 1);
 
-  void _randomiseColor() {
-    final r = Random().nextInt(255);
-    final g = Random().nextInt(255);
-    final b = Random().nextInt(255);
-    final newColor = Color.fromRGBO(r, g, b, 1);
-
-    setState(() {
-      backgroundColor = newColor;
-    });
-
-  }
+  final randomizer = ColorRandomiser(const Color.fromRGBO(255, 255, 255, 1));
 
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
-      onTap: _randomiseColor,
+    return GestureDetector(
+      onTap: () => setState(() {
+        randomizer.randomize();
+      }),
       child: Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: randomizer.getColor,
         body: const Center(
           child: Text(
             'Hello',
